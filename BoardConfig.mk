@@ -25,6 +25,9 @@ BOARD_VENDOR := xiaomi
 TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
 TARGET_BOARD_INFO_FILE ?= $(DEVICE_PATH)/board-info.txt
 
+# Config by me
+ANDROID_COMPILE_WITH_JACK := false
+
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
