@@ -228,5 +228,9 @@ WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 TARGET_USES_QCOM_WCNSS_QMI := true
 
+# CRYPTS
+TARGET_CRYPTFS_HW_PATH := device/qcom/common/cryptfs_hw
+
+
 # Inherit from the proprietary version
 -include vendor/xiaomi/gemini/BoardConfigVendor.mk
