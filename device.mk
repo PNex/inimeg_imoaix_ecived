@@ -310,3 +310,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini
 
+# Essential OTA Config
+PRODUCT_PACKAGES += \
+    PureOTA
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.ota.build.date=$(shell date +%Y%m%d)
+
+# Device specific
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.ota.manifest=https://raw.githubusercontent.com/marulamsamosir/ota/nougat/pn_gemini.json
