@@ -232,7 +232,7 @@ WIFI_DRIVER_FW_PATH_P2P := "p2p"
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 # CRYPTS
-TARGET_CRYPTFS_HW_PATH := vendor/qcom/opensource/cryptfs_hw
+TARGET_CRYPTFS_HW_PATH := device/qcom/common/cryptfs_hw
 
 
 # Inherit from the proprietary version
