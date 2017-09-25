@@ -17,8 +17,9 @@
 
 
 # Assert
-DEVICE_PATH := device/xiaomi/gemini
 TARGET_OTA_ASSERT_DEVICE := gemini
+DEVICE_PATH := device/xiaomi/gemini
+PLATFORM_PATH := device/xiaomi/gemini
 
 # Properties
 BOARD_VENDOR := xiaomi
@@ -39,7 +40,7 @@ TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a53
 
 ENABLE_CPUSETS := true
-
+ENABLE_SCHED_BOOST := true
 TARGET_USES_64_BIT_BINDER := true
 
 # Bootloader
@@ -49,20 +50,20 @@ TARGET_NO_BOOTLOADER := true
 # Kernel
 # KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-4.9/bin
 # KERNEL_TOOLCHAIN_PREFIX := aarch64-linux-android-
-BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom user_debug=31 
-BOARD_KERNEL_CMDLINE += msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 cma=32M@0-0xffffffff
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom ehci-hcd.park=3 lpm_levels.sleep_disabled=1 cma=32M@0-0xffffffff
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive console=tty60,115200,n8 user_debug=31 msm_rtb.filter=0x237
+BOARD_KERNEL_CMDLINE += androidboot.console=ttyHSL0
 # BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom ehci-hcd.park=3 lpm_levels.sleep_disabled=1 cma=32M@0-0xffffffff
+BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_TAGS_OFFSET := 0x00000100
 BOARD_RAMDISK_OFFSET := 0x01000000
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 TARGET_KERNEL_CONFIG := gemini_defconfig
 TARGET_KERNEL_SOURCE := kernel/xiaomi/msm8996
-TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 
 # Platform
 TARGET_BOARD_PLATFORM := msm8996
@@ -100,8 +101,8 @@ AUDIO_USE_LL_AS_PRIMARY_OUTPUT := true
 BOARD_SUPPORTS_SOUND_TRIGGER := true
 BOARD_USES_ALSA_AUDIO := true
 # UBAH dari 1 ke 0
-USE_CUSTOM_AUDIO_POLICY := 0
-USE_XML_AUDIO_POLICY_CONF := 1
+USE_CUSTOM_AUDIO_POLICY := 1
+#USE_XML_AUDIO_POLICY_CONF := 1
 
 # Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
@@ -110,6 +111,7 @@ BOARD_HAS_QCA_BT_ROME := true
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
 QCOM_BT_USE_BTNV := true
+# QCOM_BT_USE_SMD_TTY := true
 
 # Camera
 BOARD_QTI_CAMERA_32BIT_ONLY := true
@@ -119,6 +121,8 @@ USE_DEVICE_SPECIFIC_CAMERA := true
 
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
+BOARD_CHARGER_DISABLE_INIT_BLANK := true
+BOARD_GLOBAL_CFLAGS += -DBATTERY_REAL_INFO
 
 # CM Hardware
 #BOARD_HARDWARE_CLASS += \
@@ -128,6 +132,7 @@ BOARD_USES_CYANOGEN_HARDWARE := true
 TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
 
 # CNE and DPM
+# TARGET_LDPRELOAD := libNimsWrap.so
 BOARD_USES_QCNE := true
 
 # Dex
@@ -139,6 +144,8 @@ endif
 WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
 
 # Display
+BOARD_USES_ADRENO := true
+TARGET_CONTINUOUS_SPLASH_ENABLED := true
 MAX_VIRTUAL_DISPLAY_DIMENSION := 4096
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
 TARGET_USES_C2D_COMPOSITION := true
@@ -211,7 +218,11 @@ include device/qcom/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
 
 # Sensors
+TARGET_USE_CM_RAMDISK := true
 USE_SENSOR_MULTI_HAL := true
+TARGET_PROVIDES_CALMODULE := true
+WITH_OWN_CHARGER := true
+TARGET_AINT_WANT_NO_STOCK_SENSOR := true
 
 # Vendor init
 TARGET_INIT_VENDOR_LIB := libinit_msm8996
